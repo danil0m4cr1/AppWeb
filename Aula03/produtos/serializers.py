@@ -17,7 +17,7 @@ class ProdutoSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 # Cliente
-class ClientSerializer(serializers.ModelSerializer):
+class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
         fields = "__all__"
@@ -25,7 +25,7 @@ class ClientSerializer(serializers.ModelSerializer):
 # ItemPedido
 class ItemPedidoSerializer(serializers.ModelSerializer):
     subtotal = serializers.SerializerMethodField(
-        read_only = true
+        read_only = True
     )
 
     class Meta:
@@ -45,7 +45,7 @@ class ItemPedidoSerializer(serializers.ModelSerializer):
 # Pedido
 class PedidoSerializer(serializers.ModelSerializer):
     total = serializers.SerializerMethodField(
-        read_only = true
+        read_only = True
     )
 
     class Meta:
