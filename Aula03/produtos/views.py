@@ -11,5 +11,5 @@ def home(request):
     return HttpResponse("Olá Django ! Aplicacoes Web 2026 - 2 - Aula 03 Loja de Produtos")
 
 class ProdutoViewSet(viewsets.ModelViewSet):
-    queryset = Produto.objetcs.all().order_by("-id")
+    queryset = Produto.objects.all().order_by("-id")
     serializer_class = ProdutoSerializer
