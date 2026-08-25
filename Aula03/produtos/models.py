@@ -85,6 +85,11 @@ class Pedido (models.Model):
         default = "PENDENTE"
     )
     
+    def total(self):
+        return sum(
+            item.subtotal()
+            for item in self.itens.all()
+        )
     
     def __str__(self):
         
@@ -113,7 +118,12 @@ class ItemPedido(models.Model):
         max_digits = 10,
         decimal_places = 2
     )
-    
+
+    def save(self, *args, **kwargs):
+        if not self.preco_unitario:
+            self.preco_unitario = self.produto.preco
+        super.save(*args, **kwargs)
+
     def subtotal (self):
         
         return self.quantidade * self.preco_unitario
