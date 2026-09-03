@@ -61,3 +61,64 @@ class PedidoSerializer(serializers.ModelSerializer):
     def get_total(obj,self):
         return obj.total()
 
+
+# ItemPedidoDetalhe
+class ItemPedidoDetalheSerializer(serializers.ModelSerializer):
+    produto_nome = serializers.CharField(
+        source = "produto.nome",
+        read_only = True
+    )
+
+    subtotal = serializers.SerializerMethodField(
+        read_only = True
+    )
+
+    class Meta:
+        model = ItemPedido
+
+        fields = [
+            "id",
+            "produto",
+            "produto_nome",
+            "quantidade",
+            "preco_unitario",
+            "subtotal"
+        ]
+
+    def get_subtotal(self, obj):
+        return obj.subtotal()
+
+class StatusPedidoSerializer(serializers.ModelSerializer):
+    itens = ItemPedidoDetalheSerializer(
+        many = True,
+        read_only = True
+    )
+
+    total = serializers.SerializerMethodField(
+        read_only = True
+    )
+
+    class Meta:
+        model = Pedido
+        
+        fields = [
+            "id",
+            "cliente",
+            "descricao",
+            "data_pedido",
+            "status",
+            "itens",
+            "total"
+        ]
+
+        read_only_fields = [
+            "id",
+            "cliente",
+            "descricao",
+            "data_pedido",
+            "itens",
+            "total"
+        ]
+
+    def get_total(self, obj):
+        return obj.total()
